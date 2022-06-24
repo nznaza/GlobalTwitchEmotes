@@ -87,3 +87,5 @@ build/
 release/
 .clientId
 GlobalTwitchEmotes.zip
+
+.DS_Store

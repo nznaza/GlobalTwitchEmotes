@@ -80,6 +80,7 @@ function setAllSettings(data) {
         var sync = sanitizeSettings(data);
         var local = sync.customEmotesList;
 
+        
         // Custom emotes are stored in indexeddb
         delete sync.customEmotesList;
 
@@ -109,21 +110,25 @@ function setSettingsEntry(key, value) {
 function migrateSettings(customEmotesList, sync) {
     return new Promise(function(resolve, reject) {
         var settings;
-
-        if (sync.version === '1.4.0') {
-            settings = sync;
-            settings.customEmotesList = customEmotesList;
-            
-            settings.seventvGlobal = false;
-            settings.seventvChannels = false;
-            settings.seventvChannelsList = [];
-
-            resolve(settings);
-        } else if (sync.version === '1.5.0') {
-            settings = sync;
-            settings.customEmotesList = customEmotesList;
-
-            resolve(settings);
+        if (sync){
+            if (sync.version === '1.4.0') {
+                settings = sync;
+                settings.customEmotesList = customEmotesList;
+                
+                settings.seventvGlobal = false;
+                settings.seventvChannels = false;
+                settings.seventvChannelsList = [];
+    
+                resolve(settings);
+            } else if (sync.version === '1.5.0') {
+                settings = sync;
+                settings.customEmotesList = customEmotesList;
+    
+                resolve(settings);
+            } else {
+                // Cannot recover, reset to default
+                resolve({});
+            }    
         } else {
             // Cannot recover, reset to default
             resolve({});

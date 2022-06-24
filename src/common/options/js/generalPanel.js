@@ -59,6 +59,8 @@ function updateStatuses() {
 }
 
 function onMessage(message) {
+    if (message == null)
+        return;
     if (message.header === 'allEmotes') {
         client.stopListening();
 

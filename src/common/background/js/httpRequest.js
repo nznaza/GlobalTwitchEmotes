@@ -12,7 +12,7 @@ function sendGetRequest(url, options) {
         var fetchCall = function (currentRetryCount) {
             fetch(url, options).then(function (response) {
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    console.error(Error(response.statusText));
                 }
                 resolve(response.json());
             }).catch(function (error) {

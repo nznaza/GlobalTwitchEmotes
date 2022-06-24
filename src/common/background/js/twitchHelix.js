@@ -2,22 +2,22 @@ var httpRequest = require('./httpRequest');
 
 const CHANNEL_ID_ENDPOINT = 'https://api.twitch.tv/helix/users?login={CHANNEL_NAME}';
 const CLIENT_ID = '8u46rkmb38ovr4be1xue3hbb0ooagj';
-const BEARER_TOKEN_ENDPOINT = 'https://id.twitch.tv/oauth2/token?client_id=8u46rkmb38ovr4be1xue3hbb0ooagj&grant_type=client_credentials&client_secret={CLIENT_SECRET}'
+const CLIENT_SECRET = '';
+const BEARER_TOKEN_ENDPOINT = 'https://id.twitch.tv/oauth2/token?client_id={CLIENT_ID}&grant_type=client_credentials&client_secret={CLIENT_SECRET}'
 
 function getBearerToken() {
     return new Promise(function(resolve, reject) {
-        httpRequest.get(BEARER_TOKEN_ENDPOINT.replace('{CLIENT_SECRET}', getClientSecret()), {
+        var url = BEARER_TOKEN_ENDPOINT.replace('{CLIENT_ID}', CLIENT_ID).replace('{CLIENT_SECRET}', getClientSecret());
+        httpRequest.get(url, {
             method: 'POST',
             headers: {
                 'Accept': 'application/vnd.twitchtv.v5+json'
             }
         }).then(function(responseJSON) {
             console.log(responseJSON);
-
             resolve(responseJSON.access_token);
         }).catch(function(error) {
-            console.error('Failed to retrieve access token - ' + error);
-
+            console.error('Failed to retrieve access token  from url ' + url +' - Error:' + error);
             reject(error);
         });
     });
@@ -50,7 +50,7 @@ function getChannelIdFromName(channel_name) {
 }
 
 function getClientSecret() {
-    return ''; // twitch client secret
+    return CLIENT_SECRET; // twitch client secret
 }
 
 function getClientID() {

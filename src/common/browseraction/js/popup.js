@@ -35,6 +35,8 @@ function initialize() {
 }
 
 function onMessage(message) {
+    if (message == null)
+        return;
     console.log('Message received with header "' + message.header + '"');
 
     if (message.header === 'settings') {
