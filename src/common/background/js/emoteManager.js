@@ -16,7 +16,8 @@ const EMOTE_SETS = {
     twitchGlobal: require('./emoteSets/twitchGlobal'),
     twitchSmilies: require('./emoteSets/twitchSmilies'),
     unicodeEmojis: require('./emoteSets/unicodeEmojis'),
-    customEmotes: require('./emoteSets/customEmotes')
+    customEmotes: require('./emoteSets/customEmotes'),
+    customServerEmotes: require('./emoteSets/customServerEmotes')
 };
 
 var emoteRefreshTimeout;
@@ -161,6 +162,20 @@ function loadAllEmotes() {
             console.log('Loaded custom emotes.');
         }
 
+
+        if (settings.customServerEmotes && settings.customServerList.length > 0) {
+            promises.push(new Promise(function (resolve, reject) {
+                for (var i = 0; i < settings.customServerList.length; ++i) {
+                    var server = settings.customServerList[i].toLowerCase().trim();
+                    promises.push(generateEmoteSet('customServerEmotes:' + server, server).then(function (setName) {
+                        generatedEmotes[setName] = cachedEmotes[setName];
+                    }).catch(reject));
+                }
+                resolve();
+            }));
+        }
+
+
         // Run GTE with the emotes that managed to succeed
         Promise.allSettled(promises).then(function() {
             onReady();
@@ -240,7 +255,6 @@ function fetchAndCacheEmotesFromServer(set, url) {
         httpRequest.get(url).then(function(responseJSON) {
             // Remove colon postfix to use correct emote parser
             var parserModule = set.indexOf(':') !== -1 ? set.substr(0, set.indexOf(':')) : set;
-
             var emotes = {
                 emotes: EMOTE_SETS[parserModule].parseEmotes(responseJSON),
                 date: Date.now()

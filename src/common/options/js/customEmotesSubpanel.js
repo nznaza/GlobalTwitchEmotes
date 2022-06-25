@@ -40,6 +40,18 @@ function init() {
             }
         ]
     });
+
+    $('#customServerList').EditableTable({
+        columns: [
+            {
+                name: 'name',
+                displayName: 'Servers',
+                type: 'text',
+                placeholder: 'Insert server directory JSON here...'
+            }
+        ]
+    });
+
 }
 
 module.exports = {

@@ -21,12 +21,14 @@ const SETTINGS_SELECTORS = {
     seventvGlobal: '#seventvGlobalCheckbox',
     seventvChannels: '#seventvChannelsCheckbox',
     customEmotes: '#customEmotesCheckbox',
+    customServerEmotes: '#customServerCheckbox',
 
     twitchChannelsList: '#twitchChannelsList',
     bttvChannelsList: '#bttvChannelsList',
     ffzChannelsList: '#ffzChannelsList',
     seventvChannelsList: '#seventvChannelsList',
     customEmotesList: '#customEmotesList',
+    customServerList: '#customServerList',
 
     domainFilterMode: '[name="domainFilterMode"]',
     domainFilterList: '#domainFilterList',

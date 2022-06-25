@@ -10,6 +10,15 @@
     input.fileBrowser#emoteBrowser(type='file', accept='image/*')
     table#customEmotesList
 
+    label.inline
+        input(type='checkbox' id='customServerCheckbox')
+        | Enable Custom Server Emotes
+    .tooltipTrigger(data-tooltip-html='#CustomServerTooltipHTML') ?
+
+    table#customServerList
+
     #CustomEmotesTooltipHTML.tooltipHTML You can assign your own custom emotes for Global Twitch Emotes to render by adding entries to the table below. All emotes larger than 80x80 pixels will automatically be scaled down.
         br
         | Maximum file size per emote: 1MB
+
+    #CustomServerTooltipHTML.tooltipHTML You can assign your own custom server for Global Twitch Emotes to render by adding entries to the table below.
